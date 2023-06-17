@@ -3,7 +3,7 @@ import classes from './AppNav.module.css'
 const AppNav = () => {
   return (
     <>
-        <h1 className={classes.nav}>
+        <h1>
         AppNav
         </h1>
     </>
