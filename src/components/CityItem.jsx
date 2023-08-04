@@ -15,7 +15,6 @@ const CityItem = ({ city }) => {
   // eslint-disable-next-line react/prop-types
   const { cityName, emoji, date, id, position } = city;
 
-  console.log(position);
   return (
     <li>
       {/* using for add query string to url */}
