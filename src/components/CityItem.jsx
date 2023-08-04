@@ -1,6 +1,6 @@
-import React from "react";
 import styles from "./CityItem.module.css";
 import { Link } from "react-router-dom";
+import { useCities } from "../context/CitiesContext";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -9,13 +9,22 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
+// eslint-disable-next-line react/prop-types
 const CityItem = ({ city }) => {
+  const { currentCity } = useCities();
+  // eslint-disable-next-line react/prop-types
   const { cityName, emoji, date, id, position } = city;
+
   console.log(position);
   return (
     <li>
       {/* using for add query string to url */}
-      <Link className={styles.cityItem} to={`${id}?lat=${position.lat}&lng=${position.lng}`}>
+      <Link
+        className={`${styles.cityItem} ${
+          id === currentCity.id ? styles['cityItem--active'] : ""
+        }`}
+        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
+      >
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
