@@ -13,7 +13,7 @@ const Sidebar = () => {
        
         <footer className={styles.footer}>
             <p className={styles.copyright}>
-                &copy; copyright{new Date().getFullYear} by Worldwise Inc.
+                &copy; copyright{new Date().getFullYear} by @m@ncode.
             </p>
         </footer>
     </div>
