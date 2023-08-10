@@ -1,10 +1,16 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 
 //cities api
 const BASE_URL = "http://localhost:9000";
 const CitiesContext = createContext();
 
-const intialState = {
+const initialState = {
   cities: [],
   isLoading: false,
   currentCity: {},
@@ -55,9 +61,9 @@ function reducer(state, action) {
 }
 
 const CitiesProvider = ({ children }) => {
-  const [{ cities, isLoading, currentCity , error}, dispatch] = useReducer(
+  const [{ cities, isLoading, currentCity, error }, dispatch] = useReducer(
     reducer,
-    intialState
+    initialState
   );
 
   useEffect(() => {
@@ -77,22 +83,25 @@ const CitiesProvider = ({ children }) => {
     fetchCities();
   }, []);
 
-  async function getCity(id) {
-    //id coming from url is string
-    if(Number(id)===currentCity.id) return;
+  const getCity = useCallback(
+    async function getCity(id) {
+      //id coming from url is string
+      if (Number(id) === currentCity.id) return;
 
-    dispatch({ type: "loading" });
-    try {
-      const res = await fetch(`${BASE_URL}/cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: "city/loaded", payload: data });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "There is an error while loading city...",
-      });
-    }
-  }
+      dispatch({ type: "loading" });
+      try {
+        const res = await fetch(`${BASE_URL}/cities/${id}`);
+        const data = await res.json();
+        dispatch({ type: "city/loaded", payload: data });
+      } catch {
+        dispatch({
+          type: "rejected",
+          payload: "There is an error while loading city...",
+        });
+      }
+    },
+    [currentCity.id]
+  );
 
   async function createCity(newCity) {
     dispatch({ type: "loading" });
@@ -156,4 +165,5 @@ const useCities = () => {
   return context;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { CitiesProvider, useCities };
