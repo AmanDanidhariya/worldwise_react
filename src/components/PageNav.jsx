@@ -3,6 +3,7 @@ import styles from './PageNav.module.css'
 import Logo from './Logo'
 
 const PageNav = () => {
+  //main(home) Navigation bar 
   return (
     <nav className={styles.nav}>
         <Logo/>

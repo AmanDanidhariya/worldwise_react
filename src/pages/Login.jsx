@@ -6,7 +6,6 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState("john@example.com");
   const [password, setPassword] = useState("qwerty");
 
@@ -15,7 +14,7 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
+  
     if (email && password) login(email, password);
   }
 
